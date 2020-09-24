@@ -6,6 +6,7 @@ const root = document.createElement('div')
 root.id = 'app'
 document.body.appendChild(root)
 
+console.log('加载main....:')
 Vue.use(ElementUI)
 
 new Vue({

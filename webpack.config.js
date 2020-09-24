@@ -28,7 +28,12 @@ module.exports = {
         new VueLoaderPlugin(),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            template: './src/index.html'
+            template: './src/index.html',
+            minify: {
+                removeComments: false, // 改为false
+                collapseWhitespace: false, // 改为false
+                removeAttributeQuotes: false // 改为false
+            },
         })
     ]
 }

@@ -29,13 +29,16 @@ let config = {
 
 let location = window.location.href
 let mainConfig
-for(var o of config.main){
-    if(o.rep.test(location)){
-        mainConfig = o
+for(let item of config.main){
+
+    // console.log('config:', config)
+    if(item.rep.test(location)){
+        mainConfig = item
         break
     }
 }
 function loadElmBtn(callback){
+    console.log('mainConfig:', mainConfig)
     let domList = getElementsByAttr(...mainConfig.goodItemAttr)
     for(var element of domList){
         let btn = document.createElement('div')
@@ -49,9 +52,9 @@ function loadElmBtn(callback){
     }
 }
 /**
- * 
- * @param {点击事件event} event 
- * @param {*操作商品列表} goodsList 
+ *
+ * @param {点击事件event} event
+ * @param {*操作商品列表} goodsList
  */
 function addGood(event, goodsList){
     id = goodsList.length
@@ -82,7 +85,7 @@ function cleanGood(){
 /**
  * 说明：为了格式化控制good数据格式一致
  * inter
- * @param {good数据} obj 
+ * @param {good数据} obj
  */
 function IGood(obj){
     return Object.assign({
