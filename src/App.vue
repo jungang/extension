@@ -44,6 +44,10 @@ axios.defaults.transformRequest = [function (data) {
 export default {
     data: function(){
         return {
+          store:{
+            count:1,
+            saveIds:[]
+          },
           timing:{},
             n:0,
             autoSave:true,
@@ -110,13 +114,48 @@ export default {
 
   created() {
     // this.getList()
+
+    localStorage.store && (this.store = JSON.parse(localStorage.store))
+    // this.store = localStorage.store ? JSON.parse(localStorage.store) : {}
+    // this.store.count ? this.store.count ++ : this.store.count = 1
+    this.store.count ++
+
+
+
+    // todo 添加新id
+    this.store.saveIds = this.store.saveIds.concat([1,2,3,4,5])
+
+
+    this.saveNum = [4,5,6,7,8]
+
+    // todo 排除掉 已保存id
+    this.saveNum = this.saveNum.filter(item=>{
+      console.log('item:', item)
+      const _v = this.store.saveIds.find(id=>id === item)
+      console.log('_v:', _v)
+      return !_v
+    })
+
+
+    localStorage.store = JSON.stringify(this.store)
+    // console.log('count:', this.store.count)
+    // console.log('saveIds:', this.store.saveIds)
+    console.log('this.saveNum:', this.saveNum)
+
   },
     methods: {
+
+
 
       chooseMoreSheet(dealTaskIds){
         var url = this.pccCoreService+"/workbenchcontroller/choosemoresheet";
         var param= {"dealTaskIds":dealTaskIds};
         holly.post(url,param, (data)=> {
+
+
+          this.store.saveIds = [1]
+
+
           console.log('保存成功:')
           this.$notify({
             type: 'success',
@@ -164,6 +203,9 @@ export default {
         // 保存
 
         if(this.autoSave){
+
+
+
           const saveIds = this.dealTaskIds.slice(0,this.saveNum)
           this.chooseMoreSheet(saveIds.toString())
         }
